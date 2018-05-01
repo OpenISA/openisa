@@ -18,8 +18,9 @@ env.sh
 linker-oi/binutils-2.23.2/*
 linker-oi/build/
 llvm-openisa/
-mibench/testes-x86/
-spec/testes-x86/
+mibench/testes-x86/bin/
+mibench/testes-x86/input/
+spec/testes-x86/bin/
 newlib/build/
 obj/
 oi-toolchain/

@@ -27,3 +27,49 @@ Note that build.sh is smart enough to skip re-building what was already built.
 
 After the build process is done, env.sh may be sourced to put the tools in
 PATH and allow them to be easily used.
+
+-------------------------------------------------------------------------------
+Running MiBench
+-------------------------------------------------------------------------------
+
+First, source env.sh:
+
+$ . env.sh
+
+This will also allow regular users to use perf.
+Next, go to mibench dir and copy the needed input files:
+
+$ cd mibench/testes-x86
+$ ./copy_input.sh
+
+Finally, run all benchmarks and measure their times:
+
+$ ./measure_x86.sh
+
+The results will be available in .csv files and a graph in mibench.pdf.
+
+-------------------------------------------------------------------------------
+Understanding measure_x86.sh
+-------------------------------------------------------------------------------
+
+run_test_check_output (mibench_check_output.csv):
+- run each benchmark and compare the output of each run
+- the numbers represent the execution time, in seconds
+- !! mean that the program output didn't match the expected output
+  (golden file) - this is not necessarily an error, but usually happens only
+  with lame.
+
+run_test_factor_libc_out (mibench_factor_libc_out.csv):
+- measures how much time (in %) was spent in the benchmark code and how much
+  time was spent elsewhere, especially in libc. This is used in the next step,
+  to factor out time spent in libc or somewhere other than the main benchmark
+  code, that was not translated by the SBT, and thus should not be considered.
+- each number pair represents the mean of time spent in the main binary (in %)
+  and the standard deviation, respectively, for each translation mode.
+
+run_test_measure_time (mibench_runtime.csv):
+- measures the execution times of each translated binary, excluding time spent
+  in libc or elsewhere.
+- each number pair represents the mean and standard deviation of the slowdown
+  of the each mode of each translated binary, relative to the execution time
+  of each native binary.

@@ -131,14 +131,18 @@ fi
 # Create a file to configure environmental variables - the user just needs to
 # source "env.sh"
 # TODO: add ARM cross-compiler to PATH
-echo export PATH=\$PATH:${ROOT}/oi-toolchain/bin > ${ROOT}/env.sh
+echo export PATH=${ROOT}/oi-toolchain/bin:\$PATH > ${ROOT}/env.sh
+echo "echo -1 | sudo tee /proc/sys/kernel/perf_event_paranoid" >> \
+${ROOT}/env.sh
 
 # Image is almost ready. If you do not want to build all benchmarks, comment the
 # lines below and it should be fine (you can run the lines below later).
-cd ${ROOT}/mibench || check_error
-./build_all_x86.sh || check_error
-mkdir -p ${ROOT}/spec/testes-x86/bin
-cp -v testes-x86/bin/* ${ROOT}/spec/testes-x86/bin || check_error
+[ ! -f ${ROOT}/spec/testes-x86/bin/susan-locals ] && {
+    cd ${ROOT}/mibench || check_error
+    ./build_all_x86.sh || check_error
+    mkdir -p ${ROOT}/spec/testes-x86/bin
+    cp -v testes-x86/bin/* ${ROOT}/spec/testes-x86/bin || check_error
+}
 
 # TODO: build SPEC
 # cd ${ROOT}/spec || check_error

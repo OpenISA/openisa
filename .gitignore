@@ -19,6 +19,7 @@ linker-oi/binutils-2.23.2/*
 linker-oi/build/
 llvm-openisa/
 mibench/testes-x86/
+spec/testes-x86/
 newlib/build/
 obj/
 oi-toolchain/

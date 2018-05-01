@@ -5,7 +5,7 @@ Installing the required packages
 -------------------------------------------------------------------------------
 
 This branch is designed to build everything in-place, outside a Docker
-container, on Debian 9 host machine.
+container, on a Debian 9 host machine.
 
 To install all needed packages, use this command:
 
